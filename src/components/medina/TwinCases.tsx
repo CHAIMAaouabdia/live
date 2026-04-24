@@ -1,0 +1,63 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import hostHome from "@/assets/host-home.jpg";
+import artisan from "@/assets/artisan.jpg";
+
+const cases = [
+  {
+    img: hostHome,
+    eyebrow: "Hébergement",
+    title: "Dormez au cœur de la médina",
+    text: "Hôtels de charme, appartements traditionnels ou immersion totale chez l'habitant — choisissez votre manière d'habiter Constantine.",
+    cta: "Explorer",
+    href: "#hebergement",
+  },
+  {
+    img: artisan,
+    eyebrow: "Expériences",
+    title: "Vivez les traditions vivantes",
+    text: "Ateliers d'artisans, cuisine du terroir, parcours guidés ou immersions solidaires — façonnez un voyage à votre image.",
+    cta: "Découvrir",
+    href: "#experiences",
+  },
+];
+
+export const TwinCases = () => (
+  <section className="py-24 md:py-32 mt-12">
+    <div className="container mx-auto px-6 lg:px-10">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+        {cases.map((c) => (
+          <a
+            key={c.eyebrow}
+            href={c.href}
+            className="group block frame-cirta bg-card overflow-hidden transition-all duration-500 hover:shadow-elegant"
+          >
+            <div className="relative aspect-[4/3] overflow-hidden">
+              <img
+                src={c.img}
+                alt={c.title}
+                loading="lazy"
+                width={1280}
+                height={960}
+                className="w-full h-full object-cover image-warm transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brown-dark/50 to-transparent" />
+              <span className="absolute top-5 left-5 eyebrow text-sand-50 bg-brown-dark/40 backdrop-blur-sm px-3 py-1.5 border border-sand-100/30">
+                {c.eyebrow}
+              </span>
+            </div>
+            <div className="p-8 md:p-10">
+              <h3 className="font-serif text-3xl md:text-4xl text-ink mb-3 leading-tight">
+                {c.title}
+              </h3>
+              <p className="text-muted-foreground leading-relaxed mb-6">{c.text}</p>
+              <span className="inline-flex items-center gap-2 text-brown font-display text-xs uppercase tracking-[0.2em] group-hover:gap-4 transition-all">
+                {c.cta} <ArrowRight className="w-4 h-4" />
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+);
