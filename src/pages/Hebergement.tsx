@@ -82,6 +82,33 @@ const Hebergement = () => {
             align="center"
           />
 
+          {/* Bandeau récap recherche (si paramètres reçus depuis Hero) */}
+          {(fromDate || toDate || guests) && (
+            <div className="frame-cirta-soft bg-secondary/50 px-5 py-3 mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-serif">
+              <span className="eyebrow text-[10px]">Votre recherche</span>
+              {fromDate && toDate && (
+                <span className="flex items-center gap-1.5 text-ink">
+                  <Calendar className="w-3.5 h-3.5 text-brown" />
+                  {new Date(fromDate).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
+                  {" → "}
+                  {new Date(toDate).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
+                </span>
+              )}
+              {guests && (
+                <span className="flex items-center gap-1.5 text-ink">
+                  <Users className="w-3.5 h-3.5 text-brown" />
+                  {guests} voyageur{Number(guests) > 1 ? "s" : ""}
+                </span>
+              )}
+              <button
+                onClick={() => setParams({})}
+                className="ml-auto text-xs text-brown hover:text-ink flex items-center gap-1 font-display uppercase tracking-widest"
+              >
+                <X className="w-3 h-3" /> Effacer
+              </button>
+            </div>
+          )}
+
           {/* Barre de recherche + filtres principaux */}
           <div className="frame-cirta-soft bg-card p-5 md:p-6 mb-8 space-y-5">
             <div className="grid md:grid-cols-[1fr_auto_auto] gap-3 items-center">
