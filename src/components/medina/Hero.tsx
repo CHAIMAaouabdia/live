@@ -1,10 +1,12 @@
 import { Search, MapPin, Calendar, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import hero from "@/assets/hero-constantine.jpg";
 
 export const Hero = () => {
+  const navigate = useNavigate();
   return (
-    <section id="accueil" className="relative min-h-[92vh] flex flex-col">
+    <section id="accueil" className="relative min-h-[88vh] flex flex-col">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
@@ -35,8 +37,15 @@ export const Hero = () => {
               au cœur de ses traditions millénaires.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Button variant="cirta" size="xl">Explorer les expériences</Button>
-              <Button variant="cirtaOutline" size="xl" className="border-sand-50 text-sand-50 hover:bg-sand-50 hover:text-brown-dark">
+              <Button variant="cirta" size="xl" onClick={() => navigate("/experiences")}>
+                Explorer les expériences
+              </Button>
+              <Button
+                variant="cirtaOutline"
+                size="xl"
+                onClick={() => navigate("/hebergement")}
+                className="border-sand-50 text-sand-50 hover:bg-sand-50 hover:text-brown-dark"
+              >
                 Découvrir l'hébergement
               </Button>
             </div>
@@ -46,7 +55,13 @@ export const Hero = () => {
 
       {/* Search bar */}
       <div className="relative z-10 container mx-auto px-6 lg:px-10 -mb-12 pb-4">
-        <div className="frame-cirta bg-card p-6 md:p-8 max-w-5xl mx-auto">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            navigate("/hebergement");
+          }}
+          className="frame-cirta bg-card p-6 md:p-8 max-w-5xl mx-auto"
+        >
           <div className="grid md:grid-cols-[1.2fr_1.4fr_1fr_auto] gap-4 items-end">
             <Field icon={MapPin} label="Ville">
               <input
@@ -66,11 +81,11 @@ export const Hero = () => {
                 2 adultes
               </div>
             </Field>
-            <Button variant="cirta" size="xl" className="h-[58px] w-full md:w-auto">
+            <Button type="submit" variant="cirta" size="xl" className="h-[58px] w-full md:w-auto">
               <Search className="w-4 h-4 mr-2" /> Rechercher
             </Button>
           </div>
-        </div>
+        </form>
       </div>
     </section>
   );

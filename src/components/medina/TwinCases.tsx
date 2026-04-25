@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import hostHome from "@/assets/host-home.jpg";
 import artisan from "@/assets/artisan.jpg";
@@ -9,27 +9,27 @@ const cases = [
     eyebrow: "Hébergement",
     title: "Dormez au cœur de la médina",
     text: "Hôtels de charme, appartements traditionnels ou immersion totale chez l'habitant — choisissez votre manière d'habiter Constantine.",
-    cta: "Explorer",
-    href: "#hebergement",
+    cta: "Explorer les hébergements",
+    to: "/hebergement",
   },
   {
     img: artisan,
     eyebrow: "Expériences",
     title: "Vivez les traditions vivantes",
     text: "Ateliers d'artisans, cuisine du terroir, parcours guidés ou immersions solidaires — façonnez un voyage à votre image.",
-    cta: "Découvrir",
-    href: "#experiences",
+    cta: "Découvrir les expériences",
+    to: "/experiences",
   },
 ];
 
 export const TwinCases = () => (
-  <section className="py-24 md:py-32 mt-12">
+  <section className="py-24 md:py-28 mt-12">
     <div className="container mx-auto px-6 lg:px-10">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {cases.map((c) => (
-          <a
+          <Link
             key={c.eyebrow}
-            href={c.href}
+            to={c.to}
             className="group block frame-cirta bg-card overflow-hidden transition-all duration-500 hover:shadow-elegant"
           >
             <div className="relative aspect-[4/3] overflow-hidden">
@@ -55,7 +55,7 @@ export const TwinCases = () => (
                 {c.cta} <ArrowRight className="w-4 h-4" />
               </span>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </div>

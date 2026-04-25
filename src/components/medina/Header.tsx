@@ -1,44 +1,49 @@
 import { useState } from "react";
 import { Menu, X, Globe, User } from "lucide-react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 
 const links = [
-  { label: "Accueil", href: "#accueil" },
-  { label: "Hébergement", href: "#hebergement" },
-  { label: "Expériences", href: "#experiences" },
-  { label: "Constantine", href: "#constantine" },
+  { label: "Accueil", to: "/" },
+  { label: "Hébergement", to: "/hebergement" },
+  { label: "Expériences", to: "/experiences" },
+  { label: "Bibliothèque", to: "/bibliotheque" },
 ];
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState<"FR" | "EN" | "AR">("FR");
+  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-50 bg-background/85 backdrop-blur-md border-b border-border-soft">
       <div className="container mx-auto px-6 lg:px-10">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <a href="#accueil" className="flex items-center gap-3 shrink-0">
+          <Link to="/" className="flex items-center gap-3 shrink-0">
             <img src={logo} alt="Live Médina" className="h-12 w-auto" width={200} height={120} />
-          </a>
+          </Link>
 
-          {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-10">
             {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="font-serif text-base text-ink hover:text-brown transition-colors relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-brown after:transition-all hover:after:w-full"
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.to === "/"}
+                className={({ isActive }) =>
+                  `font-serif text-base transition-colors relative after:absolute after:left-0 after:-bottom-1 after:h-px after:transition-all hover:after:w-full ${
+                    isActive
+                      ? "text-brown after:w-full after:bg-brown"
+                      : "text-ink hover:text-brown after:w-0 after:bg-brown"
+                  }`
+                }
               >
                 {l.label}
-              </a>
+              </NavLink>
             ))}
           </nav>
 
-          {/* Right cluster */}
           <div className="flex items-center gap-2">
-            {/* Lang */}
             <div className="hidden sm:flex items-center gap-1 border border-border-soft px-2 py-1.5 text-xs font-display tracking-widest">
               <Globe className="w-3.5 h-3.5 text-brown mr-1" />
               {(["FR", "EN", "AR"] as const).map((l) => (
@@ -57,8 +62,13 @@ export const Header = () => {
             <Button variant="cirtaGhost" size="sm" className="hidden sm:inline-flex">
               <User className="w-4 h-4 mr-1" /> Connexion
             </Button>
-            <Button variant="cirta" size="sm" className="hidden sm:inline-flex">
-              S'inscrire
+            <Button
+              variant="cirta"
+              size="sm"
+              className="hidden sm:inline-flex"
+              onClick={() => navigate("/hebergement")}
+            >
+              Réserver
             </Button>
 
             <button
@@ -71,18 +81,17 @@ export const Header = () => {
           </div>
         </div>
 
-        {/* Mobile menu */}
         {open && (
           <div className="lg:hidden pb-6 border-t border-border-soft pt-4 space-y-3">
             {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
+              <Link
+                key={l.to}
+                to={l.to}
                 onClick={() => setOpen(false)}
                 className="block font-serif text-lg text-ink py-1"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
             <div className="flex gap-2 pt-2">
               <Button variant="cirtaOutline" size="sm" className="flex-1">Connexion</Button>
