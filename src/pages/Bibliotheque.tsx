@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Search, Download, BookOpen, FileText, X } from "lucide-react";
+import { Search, Download, BookOpen, FileText, X, ChevronRight } from "lucide-react";
 import { Header } from "@/components/medina/Header";
 import { Footer } from "@/components/medina/Footer";
 import { SectionHeading } from "@/components/medina/SectionHeading";
@@ -49,7 +49,7 @@ const Bibliotheque = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-16">
-        <div className="container mx-auto px-6 lg:px-10 py-16">
+        <div className="container mx-auto px-6 lg:px-10 py-16 max-w-5xl">
           <SectionHeading
             eyebrow="Bibliothèque Cirta"
             title="Constantine en lecture"
@@ -77,24 +77,25 @@ const Bibliotheque = () => {
               )}
             </div>
             <div className="flex flex-wrap gap-2">
-              {TAGS.map((t) => (
+              {TAGS.map((tg) => (
                 <button
-                  key={t}
-                  onClick={() => setTag(t)}
+                  key={tg}
+                  onClick={() => setTag(tg)}
                   className={`px-4 py-1.5 text-[11px] font-display uppercase tracking-[0.18em] border transition-all ${
-                    tag === t
+                    tag === tg
                       ? "bg-primary text-primary-foreground border-brown-dark"
                       : "border-border-soft text-brown hover:bg-secondary"
                   }`}
                 >
-                  {t}
+                  {tg}
                 </button>
               ))}
             </div>
           </div>
 
-          <p className="text-sm text-muted-foreground font-serif mb-6">
-            <span className="text-ink font-semibold">{filtered.length}</span> document{filtered.length > 1 ? "s" : ""} dans la bibliothèque
+          <p className="text-sm text-muted-foreground font-serif mb-4">
+            <span className="text-ink font-semibold">{filtered.length}</span> document
+            {filtered.length > 1 ? "s" : ""} dans la bibliothèque
           </p>
 
           {filtered.length === 0 ? (
@@ -106,45 +107,75 @@ const Bibliotheque = () => {
               </p>
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((a) => (
-                <article
+            // Liste de titres en lignes — style index bibliothèque
+            <ul className="frame-cirta-soft bg-card divide-y divide-border-soft">
+              {filtered.map((a, i) => (
+                <li
                   key={a.id}
-                  className="frame-cirta-soft bg-card p-6 flex flex-col group hover:shadow-elegant transition-all duration-500"
+                  className="group flex items-center gap-4 px-5 py-4 md:px-6 md:py-5 hover:bg-secondary/40 transition-colors"
                 >
-                  {/* Faux PDF cover */}
-                  <div className="relative aspect-[3/4] mb-5 bg-gradient-warm border border-brown-dark overflow-hidden flex flex-col justify-between p-6">
-                    <div className="absolute top-2 right-2 w-8 h-8 border-l border-b border-sand-100/40" />
-                    <div>
-                      <FileText className="w-6 h-6 text-sand-100 mb-3" strokeWidth={1.2} />
-                      <p className="font-display text-[9px] uppercase tracking-[0.25em] text-sand-100/80 mb-2">
-                        {a.tag}
-                      </p>
-                      <p className="font-serif text-lg text-sand-50 leading-tight">{a.title}</p>
-                    </div>
-                    <div className="text-[10px] font-display uppercase tracking-widest text-sand-100/70">
-                      Live Médina · {a.year}
-                    </div>
+                  {/* Numéro */}
+                  <span className="font-display text-xs text-brown/60 tracking-widest w-8 shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* Icône PDF */}
+                  <FileText
+                    className="w-5 h-5 text-brown shrink-0 hidden sm:block"
+                    strokeWidth={1.4}
+                  />
+
+                  {/* Titre + meta */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-serif text-base md:text-lg text-ink leading-snug truncate group-hover:text-brown-dark transition-colors">
+                      {a.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground font-serif truncate">
+                      <span className="text-brown italic">— {a.author}</span> · {a.excerpt}
+                    </p>
                   </div>
 
-                  <div className="flex items-center justify-between text-[10px] text-muted-foreground font-display uppercase tracking-wider mb-3">
-                    <span>{a.pages} pages · PDF · {a.size}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-2 line-clamp-3">
-                    {a.excerpt}
-                  </p>
-                  <p className="text-xs text-brown font-serif italic mb-4">— {a.author}</p>
+                  {/* Tag */}
+                  <span className="hidden md:inline-block text-[10px] font-display uppercase tracking-[0.2em] text-brown border border-border-soft px-2.5 py-1 shrink-0">
+                    {a.tag}
+                  </span>
 
-                  <div className="mt-auto flex gap-2">
-                    <Button variant="cirtaOutline" size="sm" className="flex-1">
-                      <BookOpen className="w-3.5 h-3.5 mr-1.5" /> Aperçu
-                    </Button>
-                    <Button variant="cirta" size="sm" className="flex-1" onClick={() => download(a.title)}>
-                      <Download className="w-3.5 h-3.5 mr-1.5" /> PDF
-                    </Button>
+                  {/* Pages */}
+                  <span className="hidden sm:inline text-xs text-muted-foreground font-display tracking-widest shrink-0 tabular-nums">
+                    {a.pages} p · {a.size}
+                  </span>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      onClick={() => download(a.title)}
+                      className="p-2 text-brown hover:text-brown-dark hover:bg-sand-100 transition-colors"
+                      aria-label={`Télécharger ${a.title}`}
+                      title="Télécharger PDF"
+                    >
+                      <Download className="w-4 h-4" />
+                    </button>
+                    <ChevronRight className="w-4 h-4 text-brown/50 group-hover:text-brown group-hover:translate-x-0.5 transition-all" />
                   </div>
-                </article>
+                </li>
               ))}
+            </ul>
+          )}
+
+          {filtered.length > 0 && (
+            <div className="mt-8 text-center">
+              <Button
+                variant="cirtaOutline"
+                size="lg"
+                onClick={() =>
+                  toast({
+                    title: "Téléchargement complet",
+                    description: "Toute la bibliothèque sera envoyée sur votre e-mail.",
+                  })
+                }
+              >
+                <Download className="w-4 h-4 mr-2" /> Télécharger toute la collection
+              </Button>
             </div>
           )}
         </div>
