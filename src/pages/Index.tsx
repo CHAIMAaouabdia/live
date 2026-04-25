@@ -1,12 +1,8 @@
 import { Header } from "@/components/medina/Header";
 import { Hero } from "@/components/medina/Hero";
 import { TwinCases } from "@/components/medina/TwinCases";
-import { Accommodations } from "@/components/medina/Accommodations";
-import { Experiences } from "@/components/medina/Experiences";
-import { GuideOption } from "@/components/medina/GuideOption";
-import { EmotionalMap } from "@/components/medina/EmotionalMap";
+import { LibraryPreview } from "@/components/medina/LibraryPreview";
 import { Premium } from "@/components/medina/Premium";
-import { FreeContent } from "@/components/medina/FreeContent";
 import { Footer } from "@/components/medina/Footer";
 
 const Index = () => {
@@ -16,12 +12,8 @@ const Index = () => {
       <main>
         <Hero />
         <TwinCases />
-        <Accommodations />
-        <Experiences />
-        <GuideOption />
-        <EmotionalMap />
+        <LibraryPreview />
         <Premium />
-        <FreeContent />
       </main>
       <Footer />
     </div>
