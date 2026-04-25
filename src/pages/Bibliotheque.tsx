@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { articles, ArticleTag } from "@/data/medina";
 import { toast } from "@/hooks/use-toast";
+import { useI18n } from "@/contexts/I18nContext";
 
 const TAGS: ("Tous" | ArticleTag)[] = [
   "Tous",
@@ -19,6 +20,7 @@ const TAGS: ("Tous" | ArticleTag)[] = [
 ];
 
 const Bibliotheque = () => {
+  const { t } = useI18n();
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState<(typeof TAGS)[number]>("Tous");
 
@@ -40,8 +42,8 @@ const Bibliotheque = () => {
 
   const download = (title: string) => {
     toast({
-      title: "Téléchargement démarré",
-      description: `« ${title} » — fichier PDF`,
+      title: t("library.toast.start"),
+      description: `« ${title} » — ${t("library.toast.startDesc")}`,
     });
   };
 
@@ -50,27 +52,22 @@ const Bibliotheque = () => {
       <Header />
       <main className="pt-16">
         <div className="container mx-auto px-6 lg:px-10 py-16 max-w-5xl">
-          <SectionHeading
-            eyebrow="Bibliothèque Cirta"
-            title="Constantine en lecture"
-            subtitle="Une collection d'articles et de PDF sur l'histoire, les traditions et le patrimoine de la médina — gratuits, à télécharger."
-          />
+          <SectionHeading eyebrow={t("library.eyebrow")} title={t("library.title")} subtitle={t("library.subtitle")} />
 
-          {/* Search bar */}
           <div className="frame-cirta-soft bg-card p-5 mb-6">
             <div className="relative mb-4">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brown" />
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brown" />
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Rechercher un titre, un thème, un auteur…"
-                className="pl-10 rounded-none border-border-soft bg-transparent font-serif text-base"
+                placeholder={t("library.search.ph")}
+                className="ps-10 rounded-none border-border-soft bg-transparent font-serif text-base"
               />
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brown hover:text-ink"
-                  aria-label="Effacer"
+                  className="absolute end-3 top-1/2 -translate-y-1/2 text-brown hover:text-ink"
+                  aria-label={t("common.close")}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -87,45 +84,34 @@ const Bibliotheque = () => {
                       : "border-border-soft text-brown hover:bg-secondary"
                   }`}
                 >
-                  {tg}
+                  {tg === "Tous" ? t("stay.cat.all") : tg}
                 </button>
               ))}
             </div>
           </div>
 
           <p className="text-sm text-muted-foreground font-serif mb-4">
-            <span className="text-ink font-semibold">{filtered.length}</span> document
-            {filtered.length > 1 ? "s" : ""} dans la bibliothèque
+            <span className="text-ink font-semibold">{filtered.length}</span>{" "}
+            {filtered.length > 1 ? t("library.docs") : t("library.doc")}
           </p>
 
           {filtered.length === 0 ? (
             <div className="text-center py-20 frame-cirta-soft bg-card">
               <BookOpen className="w-10 h-10 text-brown mx-auto mb-3" strokeWidth={1.2} />
-              <p className="font-serif text-2xl text-ink mb-1">Aucun document trouvé</p>
-              <p className="text-muted-foreground text-sm">
-                Essayez d'autres mots-clés ou parcourez tous les thèmes.
-              </p>
+              <p className="font-serif text-2xl text-ink mb-1">{t("library.empty.title")}</p>
+              <p className="text-muted-foreground text-sm">{t("library.empty.sub")}</p>
             </div>
           ) : (
-            // Liste de titres en lignes — style index bibliothèque
             <ul className="frame-cirta-soft bg-card divide-y divide-border-soft">
               {filtered.map((a, i) => (
                 <li
                   key={a.id}
                   className="group flex items-center gap-4 px-5 py-4 md:px-6 md:py-5 hover:bg-secondary/40 transition-colors"
                 >
-                  {/* Numéro */}
                   <span className="font-display text-xs text-brown/60 tracking-widest w-8 shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-
-                  {/* Icône PDF */}
-                  <FileText
-                    className="w-5 h-5 text-brown shrink-0 hidden sm:block"
-                    strokeWidth={1.4}
-                  />
-
-                  {/* Titre + meta */}
+                  <FileText className="w-5 h-5 text-brown shrink-0 hidden sm:block" strokeWidth={1.4} />
                   <div className="flex-1 min-w-0">
                     <h3 className="font-serif text-base md:text-lg text-ink leading-snug truncate group-hover:text-brown-dark transition-colors">
                       {a.title}
@@ -134,24 +120,18 @@ const Bibliotheque = () => {
                       <span className="text-brown italic">— {a.author}</span> · {a.excerpt}
                     </p>
                   </div>
-
-                  {/* Tag */}
                   <span className="hidden md:inline-block text-[10px] font-display uppercase tracking-[0.2em] text-brown border border-border-soft px-2.5 py-1 shrink-0">
                     {a.tag}
                   </span>
-
-                  {/* Pages */}
                   <span className="hidden sm:inline text-xs text-muted-foreground font-display tracking-widest shrink-0 tabular-nums">
                     {a.pages} p · {a.size}
                   </span>
-
-                  {/* Actions */}
                   <div className="flex items-center gap-1 shrink-0">
                     <button
                       onClick={() => download(a.title)}
                       className="p-2 text-brown hover:text-brown-dark hover:bg-sand-100 transition-colors"
-                      aria-label={`Télécharger ${a.title}`}
-                      title="Télécharger PDF"
+                      aria-label={t("library.download")}
+                      title={t("library.download")}
                     >
                       <Download className="w-4 h-4" />
                     </button>
@@ -169,12 +149,12 @@ const Bibliotheque = () => {
                 size="lg"
                 onClick={() =>
                   toast({
-                    title: "Téléchargement complet",
-                    description: "Toute la bibliothèque sera envoyée sur votre e-mail.",
+                    title: t("library.toast.all"),
+                    description: t("library.toast.allDesc"),
                   })
                 }
               >
-                <Download className="w-4 h-4 mr-2" /> Télécharger toute la collection
+                <Download className="w-4 h-4 mr-2" /> {t("library.downloadAll")}
               </Button>
             </div>
           )}
