@@ -34,7 +34,7 @@ export interface Accommodation {
 export const accommodations: Accommodation[] = [
   {
     id: "riad-el-kantara",
-    img: luxury,
+    img: accRiad,
     name: "Riad El Kantara",
     type: "Classique",
     sub: "Hôtel de charme",
@@ -47,7 +47,7 @@ export const accommodations: Accommodation[] = [
   },
   {
     id: "lalla-aicha",
-    img: hostHome,
+    img: accLalla,
     name: "Maison de Lalla Aïcha",
     type: "Chez l'habitant",
     sub: "Famille hôte",
@@ -60,7 +60,7 @@ export const accommodations: Accommodation[] = [
   },
   {
     id: "dar-ben-badis",
-    img: alley,
+    img: accBenBadis,
     name: "Dar Ben Badis",
     type: "Chez l'habitant",
     sub: "Maison d'hôte",
@@ -73,7 +73,7 @@ export const accommodations: Accommodation[] = [
   },
   {
     id: "sidi-mcid",
-    img: bridges,
+    img: accSidiMcid,
     name: "Appartement Sidi M'Cid",
     type: "Classique",
     sub: "Appartement",
@@ -86,7 +86,7 @@ export const accommodations: Accommodation[] = [
   },
   {
     id: "dar-cirta",
-    img: luxury,
+    img: accDarCirta,
     name: "Dar Cirta — Suite Patrimoine",
     type: "Classique",
     sub: "Suite de luxe",
@@ -99,7 +99,7 @@ export const accommodations: Accommodation[] = [
   },
   {
     id: "fatima-souika",
-    img: hostHome,
+    img: accFatima,
     name: "Chez Fatima — Souika",
     type: "Chez l'habitant",
     sub: "Famille hôte",
@@ -132,7 +132,7 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     id: "dinandier",
-    img: artisan,
+    img: expDinandier,
     cat: "Atelier",
     title: "Dans la forge du dinandier",
     duration: "3h",
@@ -146,7 +146,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "chakhchoukha",
-    img: cuisine,
+    img: expChakhchoukha,
     cat: "Gastronomie",
     title: "Chakhchoukha en famille",
     duration: "4h",
@@ -160,7 +160,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "ville-suspendue",
-    img: guide,
+    img: expVilleSuspendue,
     cat: "Parcours",
     title: "Constantine, ville suspendue — 2 jours",
     duration: "2 jours",
@@ -175,7 +175,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "fresque",
-    img: solidarity,
+    img: expFresque,
     cat: "Solidaire",
     title: "Restaurer une fresque de la vieille ville",
     duration: "Journée",
@@ -190,7 +190,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "souika",
-    img: alley,
+    img: expSouika,
     cat: "Découverte",
     title: "Les ruelles secrètes de Souika",
     duration: "2h30",
@@ -204,7 +204,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "cirta-antique",
-    img: guide,
+    img: expCirtaAntique,
     cat: "Parcours",
     title: "Cirta antique — pierres & légendes",
     duration: "3 jours",
@@ -219,7 +219,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "calligraphie",
-    img: artisan,
+    img: expCalligraphie,
     cat: "Atelier",
     title: "Calligraphie arabe & maghrébine",
     duration: "2h",
@@ -233,7 +233,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "ecole-medina",
-    img: solidarity,
+    img: expEcole,
     cat: "Solidaire",
     title: "Soutien scolaire — école de la médina",
     duration: "½ journée",
