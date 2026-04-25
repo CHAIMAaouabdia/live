@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
-import { Star, MapPin, Search, SlidersHorizontal, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Star, MapPin, Search, SlidersHorizontal, X, Calendar, Users } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/medina/Header";
 import { Footer } from "@/components/medina/Footer";
 import { SectionHeading } from "@/components/medina/SectionHeading";
@@ -11,12 +12,26 @@ import { accommodations, Accommodation, AccommodationType } from "@/data/medina"
 type Filter = "Tous" | AccommodationType;
 
 const Hebergement = () => {
+  const [params, setParams] = useSearchParams();
+
   const [filter, setFilter] = useState<Filter>("Tous");
-  const [query, setQuery] = useState("");
-  const [maxPrice, setMaxPrice] = useState(25000);
+  const [query, setQuery] = useState(params.get("q") ?? "");
+  const [maxPrice, setMaxPrice] = useState(Number(params.get("max")) || 25000);
   const [minRating, setMinRating] = useState(0);
   const [sort, setSort] = useState<"recommended" | "price-asc" | "price-desc" | "rating">("recommended");
   const [advanced, setAdvanced] = useState(false);
+
+  const fromDate = params.get("from");
+  const toDate = params.get("to");
+  const guests = params.get("guests");
+
+  // Sync external search params (when user navigates from Hero search)
+  useEffect(() => {
+    const q = params.get("q");
+    const max = params.get("max");
+    if (q !== null) setQuery(q);
+    if (max !== null) setMaxPrice(Number(max) || 25000);
+  }, [params]);
 
   const [booking, setBooking] = useState<BookingItem | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -66,6 +81,33 @@ const Hebergement = () => {
             subtitle="Filtrez selon votre budget, votre style et l'expérience recherchée. Chaque adresse est sélectionnée par notre équipe locale."
             align="center"
           />
+
+          {/* Bandeau récap recherche (si paramètres reçus depuis Hero) */}
+          {(fromDate || toDate || guests) && (
+            <div className="frame-cirta-soft bg-secondary/50 px-5 py-3 mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-serif">
+              <span className="eyebrow text-[10px]">Votre recherche</span>
+              {fromDate && toDate && (
+                <span className="flex items-center gap-1.5 text-ink">
+                  <Calendar className="w-3.5 h-3.5 text-brown" />
+                  {new Date(fromDate).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
+                  {" → "}
+                  {new Date(toDate).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
+                </span>
+              )}
+              {guests && (
+                <span className="flex items-center gap-1.5 text-ink">
+                  <Users className="w-3.5 h-3.5 text-brown" />
+                  {guests} voyageur{Number(guests) > 1 ? "s" : ""}
+                </span>
+              )}
+              <button
+                onClick={() => setParams({})}
+                className="ml-auto text-xs text-brown hover:text-ink flex items-center gap-1 font-display uppercase tracking-widest"
+              >
+                <X className="w-3 h-3" /> Effacer
+              </button>
+            </div>
+          )}
 
           {/* Barre de recherche + filtres principaux */}
           <div className="frame-cirta-soft bg-card p-5 md:p-6 mb-8 space-y-5">
