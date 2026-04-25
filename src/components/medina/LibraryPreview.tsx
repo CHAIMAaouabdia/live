@@ -3,19 +3,16 @@ import { ArrowRight, BookOpen, Download, FileText, ChevronRight } from "lucide-r
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "./SectionHeading";
 import { articles } from "@/data/medina";
+import { useI18n } from "@/contexts/I18nContext";
 
 export const LibraryPreview = () => {
+  const { t } = useI18n();
   const featured = articles.slice(0, 5);
   return (
     <section className="py-24 md:py-28 bg-sand-50/60 border-y border-border-soft">
       <div className="container mx-auto px-6 lg:px-10 max-w-5xl">
-        <SectionHeading
-          eyebrow="Bibliothèque Cirta"
-          title="Constantine en lecture"
-          subtitle="Une collection d'articles et de PDF gratuits sur l'histoire, les traditions et le patrimoine de la médina."
-        />
+        <SectionHeading eyebrow={t("library.eyebrow")} title={t("library.title")} subtitle={t("library.subtitle")} />
 
-        {/* Liste de titres */}
         <ul className="frame-cirta-soft bg-card divide-y divide-border-soft mb-10">
           {featured.map((a, i) => (
             <li
@@ -30,9 +27,7 @@ export const LibraryPreview = () => {
                 <h3 className="font-serif text-base md:text-lg text-ink leading-snug truncate group-hover:text-brown-dark transition-colors">
                   {a.title}
                 </h3>
-                <p className="text-xs text-muted-foreground font-serif italic truncate">
-                  — {a.author}
-                </p>
+                <p className="text-xs text-muted-foreground font-serif italic truncate">— {a.author}</p>
               </div>
               <span className="hidden md:inline-block text-[10px] font-display uppercase tracking-[0.2em] text-brown border border-border-soft px-2.5 py-1 shrink-0">
                 {a.tag}
@@ -49,7 +44,7 @@ export const LibraryPreview = () => {
         <div className="text-center">
           <Button variant="cirta" size="lg" asChild>
             <Link to="/bibliotheque">
-              <BookOpen className="w-4 h-4 mr-2" /> Ouvrir la bibliothèque
+              <BookOpen className="w-4 h-4 mr-2" /> {t("library.open")}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </Button>

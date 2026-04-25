@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { Menu, X, Globe, User } from "lucide-react";
+import { Menu, X, Globe, User, LogOut, LayoutDashboard, ChevronDown } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useI18n, Lang } from "@/contexts/I18nContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "@/hooks/use-toast";
 import logo from "@/assets/logo.png";
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
   const { lang, setLang, t } = useI18n();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
   const links = [
@@ -17,19 +21,22 @@ export const Header = () => {
     { label: t("nav.library"), to: "/bibliotheque" },
   ];
 
+  const handleSignOut = () => {
+    signOut();
+    toast({ title: t("auth.signedOut") });
+    navigate("/");
+  };
+
+  const initials = user
+    ? user.name.split(" ").map((s) => s[0]).join("").slice(0, 2).toUpperCase()
+    : "";
+
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border-soft">
       <div className="container mx-auto px-6 lg:px-10">
         <div className="flex items-center justify-between h-20">
-          {/* Wordmark logo — image + bold text */}
           <Link to="/" className="flex items-center gap-3 shrink-0 group">
-            <img
-              src={logo}
-              alt="Live Médina"
-              className="h-11 w-auto"
-              width={200}
-              height={120}
-            />
+            <img src={logo} alt="Live Médina" className="h-11 w-auto" width={200} height={120} />
             <div className="hidden sm:flex flex-col leading-none">
               <span className="font-display text-xl md:text-2xl font-bold tracking-[0.18em] text-brown-dark uppercase">
                 Live <span className="text-brown">Médina</span>
@@ -78,17 +85,52 @@ export const Header = () => {
               ))}
             </div>
 
-            <Button variant="cirtaGhost" size="sm" className="hidden sm:inline-flex">
-              <User className="w-4 h-4 mr-1" /> {t("nav.login")}
-            </Button>
-            <Button
-              variant="cirta"
-              size="sm"
-              className="hidden sm:inline-flex"
-              onClick={() => navigate("/hebergement")}
-            >
-              {t("nav.book")}
-            </Button>
+            {user ? (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button className="hidden sm:flex items-center gap-2 border border-border-soft pl-2 pr-3 py-1.5 hover:bg-secondary transition-colors">
+                    <span className="w-7 h-7 rounded-full bg-gradient-to-br from-brown to-brown-dark text-sand-50 flex items-center justify-center font-display text-[11px] tracking-wider">
+                      {initials}
+                    </span>
+                    <span className="font-serif text-sm text-ink max-w-[110px] truncate">{user.name.split(" ")[0]}</span>
+                    <ChevronDown className="w-3.5 h-3.5 text-brown" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-56 p-2 bg-card border border-border">
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center gap-2 px-3 py-2 text-sm font-serif text-ink hover:bg-secondary"
+                  >
+                    <LayoutDashboard className="w-4 h-4 text-brown" /> {t("nav.dashboard")}
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-sm font-serif text-ink hover:bg-secondary text-start"
+                  >
+                    <LogOut className="w-4 h-4 text-brown" /> {t("nav.signout")}
+                  </button>
+                </PopoverContent>
+              </Popover>
+            ) : (
+              <>
+                <Button
+                  variant="cirtaGhost"
+                  size="sm"
+                  className="hidden sm:inline-flex"
+                  onClick={() => navigate("/auth")}
+                >
+                  <User className="w-4 h-4 mr-1" /> {t("nav.login")}
+                </Button>
+                <Button
+                  variant="cirta"
+                  size="sm"
+                  className="hidden sm:inline-flex"
+                  onClick={() => navigate("/auth/signup")}
+                >
+                  {t("nav.signup")}
+                </Button>
+              </>
+            )}
 
             <button
               className="lg:hidden p-2 text-ink"
@@ -126,14 +168,27 @@ export const Header = () => {
                 </button>
               ))}
             </div>
-            <div className="flex gap-2 pt-2">
-              <Button variant="cirtaOutline" size="sm" className="flex-1">
-                {t("nav.login")}
-              </Button>
-              <Button variant="cirta" size="sm" className="flex-1">
-                {t("nav.signup")}
-              </Button>
-            </div>
+            {user ? (
+              <div className="flex gap-2 pt-2">
+                <Button variant="cirtaOutline" size="sm" className="flex-1" asChild>
+                  <Link to="/dashboard" onClick={() => setOpen(false)}>
+                    <LayoutDashboard className="w-4 h-4 mr-1" /> {t("nav.dashboard")}
+                  </Link>
+                </Button>
+                <Button variant="cirta" size="sm" className="flex-1" onClick={() => { handleSignOut(); setOpen(false); }}>
+                  <LogOut className="w-4 h-4 mr-1" /> {t("nav.signout")}
+                </Button>
+              </div>
+            ) : (
+              <div className="flex gap-2 pt-2">
+                <Button variant="cirtaOutline" size="sm" className="flex-1" asChild>
+                  <Link to="/auth" onClick={() => setOpen(false)}>{t("nav.login")}</Link>
+                </Button>
+                <Button variant="cirta" size="sm" className="flex-1" asChild>
+                  <Link to="/auth/signup" onClick={() => setOpen(false)}>{t("nav.signup")}</Link>
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </div>
