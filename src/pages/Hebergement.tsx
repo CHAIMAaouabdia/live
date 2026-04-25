@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
-import { Star, MapPin, Search, SlidersHorizontal, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Star, MapPin, Search, SlidersHorizontal, X, Calendar, Users } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/medina/Header";
 import { Footer } from "@/components/medina/Footer";
 import { SectionHeading } from "@/components/medina/SectionHeading";
@@ -11,12 +12,26 @@ import { accommodations, Accommodation, AccommodationType } from "@/data/medina"
 type Filter = "Tous" | AccommodationType;
 
 const Hebergement = () => {
+  const [params, setParams] = useSearchParams();
+
   const [filter, setFilter] = useState<Filter>("Tous");
-  const [query, setQuery] = useState("");
-  const [maxPrice, setMaxPrice] = useState(25000);
+  const [query, setQuery] = useState(params.get("q") ?? "");
+  const [maxPrice, setMaxPrice] = useState(Number(params.get("max")) || 25000);
   const [minRating, setMinRating] = useState(0);
   const [sort, setSort] = useState<"recommended" | "price-asc" | "price-desc" | "rating">("recommended");
   const [advanced, setAdvanced] = useState(false);
+
+  const fromDate = params.get("from");
+  const toDate = params.get("to");
+  const guests = params.get("guests");
+
+  // Sync external search params (when user navigates from Hero search)
+  useEffect(() => {
+    const q = params.get("q");
+    const max = params.get("max");
+    if (q !== null) setQuery(q);
+    if (max !== null) setMaxPrice(Number(max) || 25000);
+  }, [params]);
 
   const [booking, setBooking] = useState<BookingItem | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
