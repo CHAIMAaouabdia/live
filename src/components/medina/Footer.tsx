@@ -1,4 +1,5 @@
 import { Instagram, Facebook, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 
 export const Footer = () => (
@@ -13,9 +14,33 @@ export const Footer = () => (
           <p className="text-sm text-sand-100/70">Constantine, Algérie</p>
         </div>
 
-        <FooterCol title="Découvrir" links={["Accueil", "Hébergement", "Expériences", "Carte émotionnelle"]} />
-        <FooterCol title="Services" links={["Parcours Premium", "Devenir hôte", "Devenir guide", "Contenu PDF"]} />
-        <FooterCol title="Live Médina" links={["À propos", "Contact", "Mentions légales", "Politique de confidentialité"]} />
+        <FooterCol
+          title="Découvrir"
+          links={[
+            { label: "Accueil", to: "/" },
+            { label: "Hébergement", to: "/hebergement" },
+            { label: "Expériences", to: "/experiences" },
+            { label: "Bibliothèque", to: "/bibliotheque" },
+          ]}
+        />
+        <FooterCol
+          title="Services"
+          links={[
+            { label: "Parcours Premium", to: "/" },
+            { label: "Devenir hôte", to: "/" },
+            { label: "Devenir guide", to: "/" },
+            { label: "Contenu PDF", to: "/bibliotheque" },
+          ]}
+        />
+        <FooterCol
+          title="Live Médina"
+          links={[
+            { label: "À propos", to: "/" },
+            { label: "Contact", to: "/" },
+            { label: "Mentions légales", to: "/" },
+            { label: "Confidentialité", to: "/" },
+          ]}
+        />
       </div>
 
       <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10">
@@ -32,15 +57,15 @@ export const Footer = () => (
   </footer>
 );
 
-const FooterCol = ({ title, links }: { title: string; links: string[] }) => (
+const FooterCol = ({ title, links }: { title: string; links: { label: string; to: string }[] }) => (
   <div>
     <p className="eyebrow text-sand-50 mb-4">{title}</p>
     <ul className="space-y-2.5">
       {links.map((l) => (
-        <li key={l}>
-          <a href="#" className="font-serif text-sand-100/80 hover:text-sand-50 transition-colors text-base">
-            {l}
-          </a>
+        <li key={l.label}>
+          <Link to={l.to} className="font-serif text-sand-100/80 hover:text-sand-50 transition-colors text-base">
+            {l.label}
+          </Link>
         </li>
       ))}
     </ul>
