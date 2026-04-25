@@ -1,11 +1,20 @@
-import hostHome from "@/assets/host-home.jpg";
-import luxury from "@/assets/luxury-riad.jpg";
-import alley from "@/assets/medina-alley.jpg";
-import bridges from "@/assets/bridges.jpg";
-import artisan from "@/assets/artisan.jpg";
-import cuisine from "@/assets/cuisine.jpg";
-import guide from "@/assets/guide-experience.jpg";
-import solidarity from "@/assets/solidarity.jpg";
+// Hébergements — images dédiées
+import accRiad from "@/assets/acc-riad-kantara.jpg";
+import accLalla from "@/assets/acc-lalla-aicha.jpg";
+import accBenBadis from "@/assets/acc-ben-badis.jpg";
+import accSidiMcid from "@/assets/acc-sidi-mcid.jpg";
+import accDarCirta from "@/assets/acc-dar-cirta.jpg";
+import accFatima from "@/assets/acc-fatima-souika.jpg";
+
+// Expériences — images dédiées
+import expDinandier from "@/assets/exp-dinandier.jpg";
+import expChakhchoukha from "@/assets/exp-chakhchoukha.jpg";
+import expVilleSuspendue from "@/assets/exp-ville-suspendue.jpg";
+import expFresque from "@/assets/exp-fresque.jpg";
+import expSouika from "@/assets/exp-souika.jpg";
+import expCirtaAntique from "@/assets/exp-cirta-antique.jpg";
+import expCalligraphie from "@/assets/exp-calligraphie.jpg";
+import expEcole from "@/assets/exp-ecole.jpg";
 
 export type AccommodationType = "Classique" | "Chez l'habitant";
 
