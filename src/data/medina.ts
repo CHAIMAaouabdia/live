@@ -15,6 +15,7 @@ import expSouika from "@/assets/exp-souika.jpg";
 import expCirtaAntique from "@/assets/exp-cirta-antique.jpg";
 import expCalligraphie from "@/assets/exp-calligraphie.jpg";
 import expEcole from "@/assets/exp-ecole.jpg";
+import expEauRose from "@/assets/exp-eau-rose.jpg";
 
 export type AccommodationType = "Classique" | "Chez l'habitant";
 
@@ -245,6 +246,20 @@ export const experiences: Experience[] = [
     description:
       "Animez un atelier (langue, dessin, musique…) dans une école associative. Rencontre humaine forte, encadrée par les enseignants.",
     highlights: ["Impact direct", "Rencontre enfants", "Don au projet"],
+  },
+  {
+    id: "eau-rose-fleur-oranger",
+    img: expEauRose,
+    cat: "Artisanat",
+    title: "L'art de la distillation — eau de rose & fleur d'oranger",
+    duration: "3h",
+    price: 2600,
+    badge: "Simple",
+    rating: 4.95,
+    location: "Maison de distillation, médina",
+    description:
+      "Tradition artisanale constantinoise transmise de mère en fille : extraction par distillation lente de l'eau de rose (ma' el ward) et de l'eau de fleur d'oranger (ma' el zhar) à l'alambic de cuivre. Cueillette des pétales à l'aube, chargement du qattara, condensation, mise en bouteille — vous repartez avec votre propre flacon parfumé.",
+    highlights: ["Alambic traditionnel en cuivre", "Cueillette au jardin", "Votre flacon à emporter", "Savoir-faire féminin transmis"],
   },
 ];
 
