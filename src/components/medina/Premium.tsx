@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Check, Crown } from "lucide-react";
+import { Check, Crown, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BookingDialog, BookingItem } from "./BookingDialog";
+import { PersonalityDialog } from "./PersonalityDialog";
 import { useI18n } from "@/contexts/I18nContext";
 import luxury from "@/assets/luxury-riad.jpg";
 
@@ -9,6 +10,7 @@ export const Premium = () => {
   const { t, locale } = useI18n();
   const [item, setItem] = useState<BookingItem | null>(null);
   const [open, setOpen] = useState(false);
+  const [quizOpen, setQuizOpen] = useState(false);
 
   const tiers = [
     {
@@ -31,9 +33,10 @@ export const Premium = () => {
       featured: true,
       features: [
         t("twin.stay.title"),
-        t("nav.experiences"),
-        "Emotional Map +",
-        t("twin.exp.title"),
+        t("nav.experiences") + " illimitées",
+        "Guide personnel dédié",
+        "Emotional Map + feedback",
+        "Gamification : points, badges, niveaux",
       ],
     },
     {
@@ -42,21 +45,39 @@ export const Premium = () => {
       price: 150000,
       desc: t("premium.luxe.desc"),
       features: [
-        t("twin.stay.title"),
+        "Questionnaire psychologique",
+        "Analyse de personnalité IA",
+        "Parcours 100% sur-mesure",
         "Concierge 24/7",
-        t("nav.experiences"),
-        t("twin.exp.title"),
+        "Hébergement signature inclus",
       ],
     },
   ];
 
   const choose = (tier: (typeof tiers)[number]) => {
+    if (tier.id === "luxe") {
+      setQuizOpen(true);
+      return;
+    }
     setItem({
       id: tier.id,
       title: `Parcours ${tier.name}`,
       subtitle: tier.desc,
       image: luxury,
       price: tier.price,
+      unit: t("exp.unit"),
+    });
+    setOpen(true);
+  };
+
+  const handleQuizContinue = (profile: string, _picks: unknown) => {
+    setQuizOpen(false);
+    setItem({
+      id: "luxe",
+      title: `Parcours Luxe — ${profile}`,
+      subtitle: "Parcours sur-mesure après analyse de personnalité",
+      image: luxury,
+      price: 150000,
       unit: t("exp.unit"),
     });
     setOpen(true);
