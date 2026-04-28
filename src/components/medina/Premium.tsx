@@ -132,13 +132,26 @@ export const Premium = () => {
                 className="w-full"
                 onClick={() => choose(tier)}
               >
-                {t("premium.choose")} {tier.name}
+                {tier.id === "luxe" ? (
+                  <>
+                    <Sparkles className="w-4 h-4 me-2" /> Démarrer l'analyse
+                  </>
+                ) : (
+                  <>
+                    {t("premium.choose")} {tier.name}
+                  </>
+                )}
               </Button>
             </div>
           ))}
         </div>
       </div>
       <BookingDialog open={open} onOpenChange={setOpen} item={item} />
+      <PersonalityDialog
+        open={quizOpen}
+        onOpenChange={setQuizOpen}
+        onContinue={handleQuizContinue}
+      />
     </section>
   );
 };
