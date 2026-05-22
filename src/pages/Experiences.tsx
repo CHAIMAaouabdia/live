@@ -26,7 +26,6 @@ const Experiences = () => {
 
   const cats: { id: Filter; icon: typeof Clock; label: string; desc: string }[] = [
     { id: "Simple", icon: Clock, label: t("exp.cat.simple"), desc: t("exp.cat.simple.desc") },
-    { id: "VIP", icon: Users, label: t("exp.cat.vip"), desc: t("exp.cat.vip.desc") },
     { id: "Solidaire", icon: Heart, label: t("exp.cat.solidaire"), desc: t("exp.cat.solidaire.desc") },
   ];
 
