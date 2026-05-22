@@ -34,7 +34,7 @@ const OwnerDashboard = () => {
             <li key={l.id} className="flex items-center gap-4 py-3">
               <img src={l.img} alt="" className="w-16 h-16 object-cover" />
               <div className="flex-1 min-w-0">
-                <p className="font-serif text-ink truncate">{l.title}</p>
+                <p className="font-serif text-ink truncate">{l.name}</p>
                 <p className="text-xs text-muted-foreground">{l.location}</p>
               </div>
               <span className="font-serif text-brown">{l.price.toLocaleString(locale)} DA</span>
