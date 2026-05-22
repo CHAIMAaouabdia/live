@@ -1,9 +1,12 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
+export type UserRole = "client" | "guide" | "proprietaire" | "admin";
+
 export interface UserProfile {
   id: string;
   email: string;
   name: string;
+  role: UserRole;
   createdAt: string;
   avatar?: string;
 }
@@ -29,8 +32,8 @@ interface AuthContextValue {
   bookings: BookingRecord[];
   favorites: string[];
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error?: string }>;
-  signUp: (name: string, email: string, password: string) => Promise<{ error?: string }>;
+  signIn: (email: string, password: string) => Promise<{ error?: string; role?: UserRole }>;
+  signUp: (name: string, email: string, password: string, role?: UserRole) => Promise<{ error?: string; role?: UserRole }>;
   signOut: () => void;
   addBooking: (b: Omit<BookingRecord, "id" | "createdAt">) => BookingRecord;
   toggleFavorite: (id: string) => void;
@@ -49,7 +52,9 @@ interface StoredUser extends UserProfile {
 
 const readUsers = (): StoredUser[] => {
   try {
-    return JSON.parse(localStorage.getItem(USERS_KEY) ?? "[]");
+    const arr = JSON.parse(localStorage.getItem(USERS_KEY) ?? "[]");
+    // backfill legacy users without role
+    return arr.map((u: StoredUser) => ({ ...u, role: u.role ?? "client" }));
   } catch {
     return [];
   }
@@ -66,13 +71,25 @@ const readJSON = <T,>(k: string, fallback: T): T => {
   }
 };
 
+export const dashboardPathForRole = (role: UserRole) => {
+  switch (role) {
+    case "guide":
+      return "/guide";
+    case "proprietaire":
+      return "/proprietaire";
+    case "admin":
+      return "/admin";
+    default:
+      return "/client";
+  }
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [bookings, setBookings] = useState<BookingRecord[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Hydrate session
   useEffect(() => {
     const sid = localStorage.getItem(SESSION_KEY);
     if (sid) {
@@ -87,7 +104,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   }, []);
 
-  // Persist per-user data
   useEffect(() => {
     if (user) localStorage.setItem(dataKey(user.id, "bookings"), JSON.stringify(bookings));
   }, [bookings, user]);
@@ -96,7 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (user) localStorage.setItem(dataKey(user.id, "favorites"), JSON.stringify(favorites));
   }, [favorites, user]);
 
-  const signUp: AuthContextValue["signUp"] = async (name, email, password) => {
+  const signUp: AuthContextValue["signUp"] = async (name, email, password, role = "client") => {
     const users = readUsers();
     if (users.find((u) => u.email.toLowerCase() === email.toLowerCase())) {
       return { error: "auth.error.emailTaken" };
@@ -105,6 +121,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       id: `u_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`,
       email,
       name,
+      role,
       password,
       createdAt: new Date().toISOString(),
     };
@@ -114,7 +131,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(profile);
     setBookings([]);
     setFavorites([]);
-    return {};
+    return { role };
   };
 
   const signIn: AuthContextValue["signIn"] = async (email, password) => {
@@ -128,7 +145,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(profile);
     setBookings(readJSON<BookingRecord[]>(dataKey(found.id, "bookings"), []));
     setFavorites(readJSON<string[]>(dataKey(found.id, "favorites"), []));
-    return {};
+    return { role: found.role };
   };
 
   const signOut = () => {

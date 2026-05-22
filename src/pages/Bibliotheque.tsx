@@ -5,7 +5,7 @@ import { Footer } from "@/components/medina/Footer";
 import { SectionHeading } from "@/components/medina/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { articles, ArticleTag } from "@/data/medina";
+import { articles, ArticleTag, articleI18n, articleTagI18n } from "@/data/medina";
 import { toast } from "@/hooks/use-toast";
 import { useI18n } from "@/contexts/I18nContext";
 
@@ -20,25 +20,36 @@ const TAGS: ("Tous" | ArticleTag)[] = [
 ];
 
 const Bibliotheque = () => {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState<(typeof TAGS)[number]>("Tous");
 
+  const tagLabel = (tg: ArticleTag) => articleTagI18n[lang][tg];
+
   const filtered = useMemo(() => {
-    return articles.filter((a) => {
-      if (tag !== "Tous" && a.tag !== tag) return false;
-      if (query) {
-        const q = query.toLowerCase();
-        if (
-          !a.title.toLowerCase().includes(q) &&
-          !a.excerpt.toLowerCase().includes(q) &&
-          !a.author.toLowerCase().includes(q)
-        )
-          return false;
-      }
-      return true;
-    });
-  }, [query, tag]);
+    return articles
+      .map((a) => {
+        const i18n = articleI18n[lang]?.[a.id];
+        return {
+          ...a,
+          title: i18n?.title ?? a.title,
+          excerpt: i18n?.excerpt ?? a.excerpt,
+        };
+      })
+      .filter((a) => {
+        if (tag !== "Tous" && a.tag !== tag) return false;
+        if (query) {
+          const q = query.toLowerCase();
+          if (
+            !a.title.toLowerCase().includes(q) &&
+            !a.excerpt.toLowerCase().includes(q) &&
+            !a.author.toLowerCase().includes(q)
+          )
+            return false;
+        }
+        return true;
+      });
+  }, [query, tag, lang]);
 
   const download = (title: string) => {
     toast({
@@ -84,7 +95,7 @@ const Bibliotheque = () => {
                       : "border-border-soft text-brown hover:bg-secondary"
                   }`}
                 >
-                  {tg === "Tous" ? t("stay.cat.all") : tg}
+                  {tg === "Tous" ? t("stay.cat.all") : tagLabel(tg)}
                 </button>
               ))}
             </div>
@@ -121,7 +132,7 @@ const Bibliotheque = () => {
                     </p>
                   </div>
                   <span className="hidden md:inline-block text-[10px] font-display uppercase tracking-[0.2em] text-brown border border-border-soft px-2.5 py-1 shrink-0">
-                    {a.tag}
+                    {tagLabel(a.tag)}
                   </span>
                   <span className="hidden sm:inline text-xs text-muted-foreground font-display tracking-widest shrink-0 tabular-nums">
                     {a.pages} p · {a.size}

@@ -18,6 +18,7 @@ export const Header = () => {
     { label: t("nav.home"), to: "/" },
     { label: t("nav.stay"), to: "/hebergement" },
     { label: t("nav.experiences"), to: "/experiences" },
+    { label: t("nav.parcours"), to: "/parcours" },
     { label: t("nav.library"), to: "/bibliotheque" },
   ];
 
