@@ -132,7 +132,7 @@ const Bibliotheque = () => {
                     </p>
                   </div>
                   <span className="hidden md:inline-block text-[10px] font-display uppercase tracking-[0.2em] text-brown border border-border-soft px-2.5 py-1 shrink-0">
-                    {a.tag}
+                    {tagLabel(a.tag)}
                   </span>
                   <span className="hidden sm:inline text-xs text-muted-foreground font-display tracking-widest shrink-0 tabular-nums">
                     {a.pages} p · {a.size}
