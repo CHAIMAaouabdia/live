@@ -187,11 +187,7 @@ const Experiences = () => {
                         className="w-full h-full object-cover image-warm transition-transform duration-700 group-hover:scale-105"
                       />
                       <span className="absolute top-3 end-3 text-[10px] font-display uppercase tracking-[0.18em] bg-primary text-primary-foreground px-2.5 py-1">
-                        {it.badge === "Simple"
-                          ? t("exp.cat.simple")
-                          : it.badge === "VIP"
-                          ? t("exp.cat.vip")
-                          : t("exp.cat.solidaire")}
+                        {it.badge === "Simple" ? t("exp.cat.simple") : t("exp.cat.solidaire")}
                       </span>
                       <button
                         onClick={() => toggleFavorite(it.id)}
