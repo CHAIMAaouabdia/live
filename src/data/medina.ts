@@ -116,7 +116,7 @@ export const accommodations: Accommodation[] = [
   },
 ];
 
-export type ExperienceCategory = "Simple" | "VIP" | "Solidaire";
+export type ExperienceCategory = "Simple" | "Solidaire";
 
 export interface Experience {
   id: string;
@@ -163,21 +163,6 @@ export const experiences: Experience[] = [
     highlights: ["Marché inclus", "Repas partagé", "Recette à emporter"],
   },
   {
-    id: "ville-suspendue",
-    img: expVilleSuspendue,
-    cat: "Parcours",
-    title: "Constantine, ville suspendue — 2 jours",
-    duration: "2 jours",
-    price: 18500,
-    priceLabel: "à partir de 18 500 DA",
-    badge: "VIP",
-    rating: 4.95,
-    location: "Centre historique",
-    description:
-      "Deux jours sur les sept ponts, palais Ahmed Bey, médina haute, gastronomie raffinée et soirée musique malouf.",
-    highlights: ["Guide expert", "Hôtel inclus", "Soirée malouf", "Transport privé"],
-  },
-  {
     id: "fresque",
     img: expFresque,
     cat: "Solidaire",
@@ -205,21 +190,6 @@ export const experiences: Experience[] = [
     description:
       "Marche guidée hors des sentiers — passages voûtés, fontaines oubliées, petits commerces et anecdotes d'historien local.",
     highlights: ["Petit groupe", "Anecdotes locales", "Pause thé incluse"],
-  },
-  {
-    id: "cirta-antique",
-    img: expCirtaAntique,
-    cat: "Parcours",
-    title: "Cirta antique — pierres & légendes",
-    duration: "3 jours",
-    price: 32000,
-    priceLabel: "à partir de 32 000 DA",
-    badge: "VIP",
-    rating: 4.9,
-    location: "Constantine & Tiddis",
-    description:
-      "Trois jours sur les traces de la Cirta numide et romaine. Site de Tiddis, musée Cirta, dîner archéologique.",
-    highlights: ["Archéologue guide", "Site de Tiddis", "Hôtel 4★ inclus"],
   },
   {
     id: "calligraphie",
