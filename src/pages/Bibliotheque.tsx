@@ -5,7 +5,7 @@ import { Footer } from "@/components/medina/Footer";
 import { SectionHeading } from "@/components/medina/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { articles, ArticleTag } from "@/data/medina";
+import { articles, ArticleTag, articleI18n, articleTagI18n } from "@/data/medina";
 import { toast } from "@/hooks/use-toast";
 import { useI18n } from "@/contexts/I18nContext";
 
