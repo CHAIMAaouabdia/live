@@ -20,25 +20,36 @@ const TAGS: ("Tous" | ArticleTag)[] = [
 ];
 
 const Bibliotheque = () => {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState<(typeof TAGS)[number]>("Tous");
 
+  const tagLabel = (tg: ArticleTag) => articleTagI18n[lang][tg];
+
   const filtered = useMemo(() => {
-    return articles.filter((a) => {
-      if (tag !== "Tous" && a.tag !== tag) return false;
-      if (query) {
-        const q = query.toLowerCase();
-        if (
-          !a.title.toLowerCase().includes(q) &&
-          !a.excerpt.toLowerCase().includes(q) &&
-          !a.author.toLowerCase().includes(q)
-        )
-          return false;
-      }
-      return true;
-    });
-  }, [query, tag]);
+    return articles
+      .map((a) => {
+        const i18n = articleI18n[lang]?.[a.id];
+        return {
+          ...a,
+          title: i18n?.title ?? a.title,
+          excerpt: i18n?.excerpt ?? a.excerpt,
+        };
+      })
+      .filter((a) => {
+        if (tag !== "Tous" && a.tag !== tag) return false;
+        if (query) {
+          const q = query.toLowerCase();
+          if (
+            !a.title.toLowerCase().includes(q) &&
+            !a.excerpt.toLowerCase().includes(q) &&
+            !a.author.toLowerCase().includes(q)
+          )
+            return false;
+        }
+        return true;
+      });
+  }, [query, tag, lang]);
 
   const download = (title: string) => {
     toast({
