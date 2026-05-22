@@ -9,13 +9,16 @@ import accFatima from "@/assets/acc-fatima-souika.jpg";
 // Expériences — images dédiées
 import expDinandier from "@/assets/exp-dinandier.jpg";
 import expChakhchoukha from "@/assets/exp-chakhchoukha.jpg";
-import expVilleSuspendue from "@/assets/exp-ville-suspendue.jpg";
 import expFresque from "@/assets/exp-fresque.jpg";
 import expSouika from "@/assets/exp-souika.jpg";
-import expCirtaAntique from "@/assets/exp-cirta-antique.jpg";
 import expCalligraphie from "@/assets/exp-calligraphie.jpg";
 import expEcole from "@/assets/exp-ecole.jpg";
 import expEauRose from "@/assets/exp-eau-rose.jpg";
+
+// Parcours — images dédiées
+import parcoursDecouverte from "@/assets/parcours-decouverte.jpg";
+import parcoursAuthentique from "@/assets/parcours-authentique.jpg";
+import parcoursSaveurs from "@/assets/parcours-saveurs.jpg";
 
 export type AccommodationType = "Classique" | "Chez l'habitant";
 
