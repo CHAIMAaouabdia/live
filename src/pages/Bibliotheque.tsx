@@ -95,7 +95,7 @@ const Bibliotheque = () => {
                       : "border-border-soft text-brown hover:bg-secondary"
                   }`}
                 >
-                  {tg === "Tous" ? t("stay.cat.all") : tg}
+                  {tg === "Tous" ? t("stay.cat.all") : tagLabel(tg)}
                 </button>
               ))}
             </div>
