@@ -82,6 +82,39 @@ const Auth = ({ mode: initialMode }: { mode: Mode }) => {
                 />
               </Field>
             )}
+            {mode === "signup" && (
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <ShieldCheck className="w-3.5 h-3.5 text-brown" />
+                  <span className="eyebrow text-[10px]">{t("auth.role.label")}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {roleOptions.map((r) => {
+                    const selected = role === r.id;
+                    return (
+                      <button
+                        key={r.id}
+                        type="button"
+                        onClick={() => setRole(r.id)}
+                        className={`text-start p-3 border transition-all ${
+                          selected
+                            ? "bg-primary text-primary-foreground border-brown-dark"
+                            : "border-border-soft hover:bg-secondary"
+                        }`}
+                      >
+                        <r.icon className={`w-4 h-4 mb-1 ${selected ? "text-sand-50" : "text-brown"}`} />
+                        <p className={`font-display text-[10px] uppercase tracking-[0.18em] mb-0.5 ${selected ? "text-sand-100" : "text-brown"}`}>
+                          {t(r.labelKey)}
+                        </p>
+                        <p className={`text-[11px] leading-snug ${selected ? "text-sand-50/90" : "text-muted-foreground"}`}>
+                          {t(r.descKey)}
+                        </p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
             <Field icon={Mail} label={t("auth.email")}>
               <Input
                 type="email"
