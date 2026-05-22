@@ -241,7 +241,6 @@ const translations: Record<Lang, Dict> = {
     "dash.profile.signout": "Se déconnecter",
 
     "nav.parcours": "Parcours",
-    "dash.welcome": "Bienvenue,",
     "dash.confirmed": "Confirmée",
     "dash.pending": "En attente",
 
