@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Mail, Lock, User, ArrowRight } from "lucide-react";
+import { Mail, Lock, User, ArrowRight, Compass, Home, ShieldCheck } from "lucide-react";
 import { Header } from "@/components/medina/Header";
 import { Footer } from "@/components/medina/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth, UserRole, dashboardPathForRole } from "@/contexts/AuthContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { toast } from "@/hooks/use-toast";
 
 type Mode = "signin" | "signup";
+
+const roleOptions: { id: UserRole; icon: React.ComponentType<{ className?: string }>; labelKey: string; descKey: string }[] = [
+  { id: "client", icon: User, labelKey: "auth.role.client", descKey: "auth.role.client.desc" },
+  { id: "guide", icon: Compass, labelKey: "auth.role.guide", descKey: "auth.role.guide.desc" },
+  { id: "proprietaire", icon: Home, labelKey: "auth.role.owner", descKey: "auth.role.owner.desc" },
+  { id: "admin", icon: ShieldCheck, labelKey: "auth.role.admin", descKey: "auth.role.admin.desc" },
+];
 
 const Auth = ({ mode: initialMode }: { mode: Mode }) => {
   const { t } = useI18n();
@@ -20,10 +27,11 @@ const Auth = ({ mode: initialMode }: { mode: Mode }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<UserRole>("client");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const redirectTo = (location.state as { from?: string } | null)?.from ?? "/dashboard";
+  const customRedirect = (location.state as { from?: string } | null)?.from;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,14 +45,15 @@ const Auth = ({ mode: initialMode }: { mode: Mode }) => {
       return;
     }
     setLoading(true);
-    const res = mode === "signup" ? await signUp(name, email, password) : await signIn(email, password);
+    const res = mode === "signup" ? await signUp(name, email, password, role) : await signIn(email, password);
     setLoading(false);
     if (res.error) {
       setError(t(res.error));
       return;
     }
     toast({ title: t("auth.welcome"), description: email });
-    navigate(redirectTo, { replace: true });
+    const dest = customRedirect ?? (res.role ? dashboardPathForRole(res.role) : "/");
+    navigate(dest, { replace: true });
   };
 
   return (
