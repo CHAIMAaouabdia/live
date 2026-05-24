@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import medina from "@/assets/medina-alley.jpg";
 
 const features = [
-  { icon: BookOpen, label: "Histoire de Cirta" },
+  { icon: BookOpen, label: "Histoire de Constantine" },
   { icon: Map, label: "Plan de la médina" },
   { icon: Sparkles, label: "Conseils d'initiés" },
 ];

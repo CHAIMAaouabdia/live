@@ -19,7 +19,7 @@ const translations: Record<Lang, Dict> = {
     "nav.hello": "Bonjour",
 
     // Hero
-    "hero.eyebrow": "Constantine — Cirta antique",
+    "hero.eyebrow": "Constantine — Médina antique",
     "hero.title.a": "Ne visitez plus la médina,",
     "hero.title.b": "habitez-la.",
     "hero.subtitle":
@@ -65,7 +65,7 @@ const translations: Record<Lang, Dict> = {
 
     // Library
     "library.title": "Constantine en lecture",
-    "library.eyebrow": "Bibliothèque Cirta",
+    "library.eyebrow": "Bibliothèque de la Médina",
     "library.subtitle":
       "Une collection d'articles et de PDF gratuits sur l'histoire, les traditions et le patrimoine de la médina.",
     "library.open": "Ouvrir la bibliothèque",
@@ -112,7 +112,7 @@ const translations: Record<Lang, Dict> = {
     "exp.eyebrow": "Expériences à Constantine",
     "exp.title": "Le cœur battant de Live Médina",
     "exp.subtitle":
-      "Trois manières d'entrer dans la vie de Cirta : simple, immersive ou solidaire — toujours portée par celles et ceux qui l'habitent.",
+      "Trois manières d'entrer dans la vie de Constantine : simple, immersive ou solidaire — toujours portée par celles et ceux qui l'habitent.",
     "exp.cat.simple": "Simple",
     "exp.cat.simple.desc": "Activités courtes et ciblées.",
     "exp.cat.vip": "VIP",
@@ -178,10 +178,10 @@ const translations: Record<Lang, Dict> = {
     "premium.eyebrow": "Parcours Premium",
     "premium.title": "Une autre dimension du voyage",
     "premium.subtitle":
-      "Trois niveaux pour habiter Cirta selon vos rêves — du standard chaleureux au luxe sur-mesure.",
+      "Trois niveaux pour habiter Constantine selon vos rêves — du standard chaleureux au luxe sur-mesure.",
     "premium.standard.desc": "L'essentiel d'un parcours organisé.",
     "premium.premium.desc": "L'expérience complète, personnalisée.",
-    "premium.luxe.desc": "L'art de vivre Cirta, sans compromis.",
+    "premium.luxe.desc": "L'art de vivre constantinois, sans compromis.",
     "premium.choose": "Choisir",
     "premium.unit": "DA / pers.",
 
@@ -199,7 +199,7 @@ const translations: Record<Lang, Dict> = {
     "footer.link.contact": "Contact",
     "footer.link.legal": "Mentions légales",
     "footer.link.privacy": "Confidentialité",
-    "footer.copy": "© 2026 Live Médina · Cirta",
+    "footer.copy": "© 2026 Live Médina",
 
     // Auth
     "auth.signin.title": "Bon retour parmi nous",
@@ -345,7 +345,7 @@ const translations: Record<Lang, Dict> = {
     "nav.book": "Book now",
     "nav.hello": "Hello",
 
-    "hero.eyebrow": "Constantine — Ancient Cirta",
+    "hero.eyebrow": "Constantine — Ancient Medina",
     "hero.title.a": "Don't just visit the medina,",
     "hero.title.b": "live in it.",
     "hero.subtitle":
@@ -388,7 +388,7 @@ const translations: Record<Lang, Dict> = {
     "twin.exp.cta": "Discover experiences",
 
     "library.title": "Reading Constantine",
-    "library.eyebrow": "Cirta Library",
+    "library.eyebrow": "Medina Library",
     "library.subtitle":
       "A free collection of articles and PDFs about the history, traditions and heritage of the medina.",
     "library.open": "Open the library",
@@ -433,7 +433,7 @@ const translations: Record<Lang, Dict> = {
     "exp.eyebrow": "Experiences in Constantine",
     "exp.title": "The beating heart of Live Médina",
     "exp.subtitle":
-      "Three ways to enter Cirta's life: simple, immersive or solidarity — always carried by those who live it.",
+      "Three ways to enter Constantine's life: simple, immersive or solidarity — always carried by those who live it.",
     "exp.cat.simple": "Simple",
     "exp.cat.simple.desc": "Short, focused activities.",
     "exp.cat.vip": "VIP",
@@ -497,10 +497,10 @@ const translations: Record<Lang, Dict> = {
     "premium.eyebrow": "Premium journeys",
     "premium.title": "A new dimension of travel",
     "premium.subtitle":
-      "Three levels to live Cirta as you dream — from warm standard to bespoke luxury.",
+      "Three levels to live Constantine as you dream — from warm standard to bespoke luxury.",
     "premium.standard.desc": "The essentials of an organised journey.",
     "premium.premium.desc": "The complete, personalised experience.",
-    "premium.luxe.desc": "Cirta's art of living, no compromise.",
+    "premium.luxe.desc": "Constantine's art of living, no compromise.",
     "premium.choose": "Choose",
     "premium.unit": "DA / pers.",
 
@@ -517,7 +517,7 @@ const translations: Record<Lang, Dict> = {
     "footer.link.contact": "Contact",
     "footer.link.legal": "Legal notice",
     "footer.link.privacy": "Privacy",
-    "footer.copy": "© 2026 Live Médina · Cirta",
+    "footer.copy": "© 2026 Live Médina",
 
     "auth.signin.title": "Welcome back",
     "auth.signin.sub": "Sign in to find your bookings and favourites.",

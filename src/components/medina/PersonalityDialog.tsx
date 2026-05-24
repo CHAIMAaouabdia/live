@@ -101,7 +101,7 @@ const EXP_AFFINITY: Record<string, Partial<Record<Axis, number>>> = {
 const PROFILES: Record<Axis, { name: string; desc: string }> = {
   contemplatif: {
     name: "Le Contemplatif",
-    desc: "Vous voyagez pour le silence, la lenteur, les instants où le temps se suspend. Cirta vous offrira ses ruelles secrètes et sa lumière.",
+    desc: "Vous voyagez pour le silence, la lenteur, les instants où le temps se suspend. Constantine vous offrira ses ruelles secrètes et sa lumière.",
   },
   aventurier: {
     name: "L'Explorateur",
@@ -117,7 +117,7 @@ const PROFILES: Record<Axis, { name: string; desc: string }> = {
   },
   spirituel: {
     name: "L'Âme en Quête",
-    desc: "Vous cherchez le sens, le geste juste, la tradition vivante. Cirta vous livrera ses savoirs sacrés.",
+    desc: "Vous cherchez le sens, le geste juste, la tradition vivante. Constantine vous livrera ses savoirs sacrés.",
   },
   hedoniste: {
     name: "L'Épicurien",
@@ -203,7 +203,7 @@ export const PersonalityDialog = ({ open, onOpenChange, onContinue }: Props) => 
               {step === "intro" &&
                 "Six questions psychologiques, une analyse de personnalité, et un parcours conçu pour vous seul."}
               {step === "quiz" && "Répondez avec votre intuition, pas votre raison."}
-              {step === "analyzing" && "Nous croisons vos réponses avec les traditions vivantes de Cirta."}
+              {step === "analyzing" && "Nous croisons vos réponses avec les traditions vivantes de Constantine."}
               {step === "result" && "Voici votre profil et les expériences qui vous correspondent."}
             </DialogDescription>
           </DialogHeader>

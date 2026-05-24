@@ -69,7 +69,7 @@ const items = [
   {
     img: guide,
     cat: "Parcours",
-    title: "Cirta antique — pierres & légendes (3j)",
+    title: "Médina antique — pierres & légendes (3j)",
     duration: "3 jours",
     price: "à partir de 32 000 DA",
     badge: "VIP",

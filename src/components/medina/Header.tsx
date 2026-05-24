@@ -18,7 +18,6 @@ export const Header = () => {
     { label: t("nav.home"), to: "/" },
     { label: t("nav.stay"), to: "/hebergement" },
     { label: t("nav.experiences"), to: "/experiences" },
-    { label: t("nav.parcours"), to: "/parcours" },
     { label: t("nav.library"), to: "/bibliotheque" },
   ];
 
@@ -43,7 +42,7 @@ export const Header = () => {
                 Live <span className="text-brown">Médina</span>
               </span>
               <span className="font-serif italic text-[10px] tracking-[0.3em] uppercase text-brown/70 mt-1">
-                Cirta · Constantine
+                Constantine
               </span>
             </div>
           </Link>

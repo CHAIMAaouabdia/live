@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { Lock, Clock, Star, MapPin, Check, Sparkles, UserCheck, ArrowRight } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { Lock, Clock, Star, MapPin, Sparkles, UserCheck, ArrowRight } from "lucide-react";
 import { Header } from "@/components/medina/Header";
 import { Footer } from "@/components/medina/Footer";
 import { SectionHeading } from "@/components/medina/SectionHeading";
@@ -10,7 +11,9 @@ import { useI18n } from "@/contexts/I18nContext";
 
 const ParcoursPage = () => {
   const { t, locale } = useI18n();
-  const [active, setActive] = useState<ParcoursT>(parcours[0]);
+  const [params] = useSearchParams();
+  const initial = parcours.find((p) => p.id === params.get("id")) ?? parcours[0];
+  const [active, setActive] = useState<ParcoursT>(initial);
   const [withGuide, setWithGuide] = useState(false);
   const [guideId, setGuideId] = useState<string>(personalGuides[0].id);
   const [booking, setBooking] = useState<BookingItem | null>(null);
@@ -111,7 +114,7 @@ const ParcoursPage = () => {
                 {active.steps.map((s, i) => (
                   <li key={i} className="relative">
                     <span
-                      className={`absolute -start-[42px] top-0 w-9 h-9 rounded-full flex items-center justify-center border-2 ${
+                      className={`absolute -start-[42px] top-0 w-9 h-9 rounded-full flex items-center justify-center border-2 font-display text-sm ${
                         s.locked
                           ? "bg-sand-100 border-brown/40 text-brown/70"
                           : "bg-primary border-brown-dark text-primary-foreground"
@@ -120,7 +123,7 @@ const ParcoursPage = () => {
                       {s.locked ? (
                         <Lock className="w-3.5 h-3.5" strokeWidth={2} />
                       ) : (
-                        <Check className="w-4 h-4" strokeWidth={2.5} />
+                        <span className="leading-none">{i + 1}</span>
                       )}
                     </span>
                     <div className="flex items-start justify-between gap-4">

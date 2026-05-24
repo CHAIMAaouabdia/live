@@ -1,10 +1,31 @@
-import { Users, Star, Calendar, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { Users, Star, Calendar, MessageCircle, Plus, X } from "lucide-react";
 import { DashboardLayout, StatCard } from "@/components/medina/DashboardLayout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
 import { useI18n } from "@/contexts/I18nContext";
 import { parcours } from "@/data/medina";
 
+interface CustomParcours { id: string; title: string; duration: string; price: number; }
+
 const GuideDashboard = () => {
   const { t } = useI18n();
+  const [myParcours, setMyParcours] = useState<CustomParcours[]>([]);
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({ title: "", duration: "", price: "" });
+
+  const submitParcours = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.title || !form.duration) return;
+    setMyParcours((p) => [
+      { id: `p_${Date.now().toString(36)}`, title: form.title, duration: form.duration, price: Number(form.price) || 0 },
+      ...p,
+    ]);
+    setForm({ title: "", duration: "", price: "" });
+    setOpen(false);
+    toast({ title: "Parcours ajouté", description: "Votre parcours est visible sur la plateforme." });
+  };
 
   const upcoming = [
     { id: "t1", parcours: parcours[1].title, date: "2026-05-25", client: "Sami B.", people: 2 },
@@ -27,9 +48,37 @@ const GuideDashboard = () => {
       </div>
 
       <section className="frame-cirta-soft bg-card p-6 mb-6">
-        <h2 className="font-serif text-2xl text-ink mb-4 flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-brown" /> {t("dash.guide.upcoming")}
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-serif text-2xl text-ink flex items-center gap-2">
+            <Calendar className="w-5 h-5 text-brown" /> Mes parcours
+          </h2>
+          <Button variant="cirta" size="sm" onClick={() => setOpen((v) => !v)}>
+            {open ? <X className="w-4 h-4 mr-1" /> : <Plus className="w-4 h-4 mr-1" />}
+            {open ? "Annuler" : "Ajouter parcours"}
+          </Button>
+        </div>
+        {open && (
+          <form onSubmit={submitParcours} className="grid sm:grid-cols-[2fr_1fr_1fr_auto] gap-2 mb-4 p-4 bg-secondary/40 border border-border-soft">
+            <Input placeholder="Titre du parcours" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="rounded-none" />
+            <Input placeholder="Durée (ex 3h)" value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} className="rounded-none" />
+            <Input placeholder="Prix DA" type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="rounded-none" />
+            <Button type="submit" variant="cirta" size="sm">Publier</Button>
+          </form>
+        )}
+        {myParcours.length > 0 && (
+          <ul className="divide-y divide-border-soft mb-6">
+            {myParcours.map((p) => (
+              <li key={p.id} className="flex items-center justify-between py-2.5">
+                <div>
+                  <p className="font-serif text-ink">{p.title}</p>
+                  <p className="text-xs text-muted-foreground">{p.duration}</p>
+                </div>
+                <span className="font-serif text-brown">{p.price > 0 ? `${p.price.toLocaleString("fr-FR")} DA` : "Gratuit"}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        <h3 className="font-serif text-lg text-ink mb-3 mt-2">{t("dash.guide.upcoming")}</h3>
         <ul className="divide-y divide-border-soft">
           {upcoming.map((u) => (
             <li key={u.id} className="flex items-center gap-4 py-3">
