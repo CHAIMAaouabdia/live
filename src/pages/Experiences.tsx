@@ -1,20 +1,22 @@
 import { useMemo, useState } from "react";
-import { Star, MapPin, Search, Clock, X, SlidersHorizontal, Heart, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Star, MapPin, Search, Clock, X, SlidersHorizontal, Heart, Users, Map, ArrowRight } from "lucide-react";
 import { Header } from "@/components/medina/Header";
 import { Footer } from "@/components/medina/Footer";
 import { SectionHeading } from "@/components/medina/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BookingDialog, BookingItem } from "@/components/medina/BookingDialog";
-import { experiences, Experience, ExperienceCategory } from "@/data/medina";
+import { experiences, Experience, ExperienceCategory, parcours } from "@/data/medina";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
 
-type Filter = "Tous" | ExperienceCategory;
+type Filter = "Tous" | ExperienceCategory | "Parcours";
 
 const Experiences = () => {
   const { t, locale } = useI18n();
   const { isFavorite, toggleFavorite } = useAuth();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState<Filter>("Tous");
   const [query, setQuery] = useState("");
   const [maxPrice, setMaxPrice] = useState(35000);
@@ -27,6 +29,7 @@ const Experiences = () => {
   const cats: { id: Filter; icon: typeof Clock; label: string; desc: string }[] = [
     { id: "Simple", icon: Clock, label: t("exp.cat.simple"), desc: t("exp.cat.simple.desc") },
     { id: "Solidaire", icon: Heart, label: t("exp.cat.solidaire"), desc: t("exp.cat.solidaire.desc") },
+    { id: "Parcours", icon: Map, label: "Parcours", desc: "Itinéraires guidés sur mesure à travers la médina." },
   ];
 
   const filtered = useMemo(() => {
