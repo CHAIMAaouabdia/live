@@ -181,6 +181,7 @@ const Experiences = () => {
             </div>
           ) : null}
 
+          {filter !== "Parcours" && (
           <div className="flex items-center justify-between mb-6">
             <p className="text-sm text-muted-foreground font-serif">
               <span className="text-ink font-semibold">{filtered.length}</span>{" "}
@@ -199,8 +200,9 @@ const Experiences = () => {
               </button>
             )}
           </div>
+          )}
 
-          {filtered.length === 0 ? (
+          {filter !== "Parcours" && (filtered.length === 0 ? (
             <div className="text-center py-20 frame-cirta-soft bg-card">
               <p className="font-serif text-2xl text-ink mb-2">{t("exp.empty.title")}</p>
               <p className="text-muted-foreground text-sm">{t("exp.empty.sub")}</p>
@@ -259,7 +261,7 @@ const Experiences = () => {
                 );
               })}
             </div>
-          )}
+          ))}
         </div>
       </main>
       <Footer />
