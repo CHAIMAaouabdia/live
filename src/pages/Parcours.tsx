@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Lock, Clock, Star, MapPin, Sparkles, UserCheck, ArrowRight } from "lucide-react";
 import { Header } from "@/components/medina/Header";
 import { Footer } from "@/components/medina/Footer";
@@ -10,7 +11,9 @@ import { useI18n } from "@/contexts/I18nContext";
 
 const ParcoursPage = () => {
   const { t, locale } = useI18n();
-  const [active, setActive] = useState<ParcoursT>(parcours[0]);
+  const [params] = useSearchParams();
+  const initial = parcours.find((p) => p.id === params.get("id")) ?? parcours[0];
+  const [active, setActive] = useState<ParcoursT>(initial);
   const [withGuide, setWithGuide] = useState(false);
   const [guideId, setGuideId] = useState<string>(personalGuides[0].id);
   const [booking, setBooking] = useState<BookingItem | null>(null);
