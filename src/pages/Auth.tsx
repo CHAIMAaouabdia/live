@@ -62,7 +62,7 @@ const Auth = ({ mode: initialMode }: { mode: Mode }) => {
       <main className="flex-1 flex items-center justify-center py-16 px-6">
         <div className="w-full max-w-md frame-cirta bg-card p-8 md:p-10">
           <div className="text-center mb-8">
-            <p className="eyebrow mb-2">Live Médina · Cirta</p>
+            <p className="eyebrow mb-2">Live Médina</p>
             <h1 className="font-serif text-3xl text-ink mb-2 leading-tight">
               {mode === "signin" ? t("auth.signin.title") : t("auth.signup.title")}
             </h1>

@@ -59,7 +59,7 @@ export const accommodations: Accommodation[] = [
     location: "Souk El Ghzel",
     rating: 5.0,
     description:
-      "Vivez en famille chez Lalla Aïcha, conteuse de la médina. Chambre sobre, repas partagés, soirées thé et histoires de Cirta.",
+      "Vivez en famille chez Lalla Aïcha, conteuse de la médina. Chambre sobre, repas partagés, soirées thé et histoires de Constantine.",
     features: ["Repas inclus", "Échange culturel", "Cuisine maison", "Conteuse de la médina"],
   },
   {
@@ -91,14 +91,14 @@ export const accommodations: Accommodation[] = [
   {
     id: "dar-cirta",
     img: accDarCirta,
-    name: "Dar Cirta — Suite Patrimoine",
+    name: "Dar El Médina — Suite Patrimoine",
     type: "Classique",
     sub: "Suite de luxe",
     price: 22000,
     location: "Vieille médina",
     rating: 4.95,
     description:
-      "Suite signature : 80 m², bois sculpté, salle de bains en marbre, service conciergerie. L'art de vivre Cirta dans toute sa splendeur.",
+      "Suite signature : 80 m², bois sculpté, salle de bains en marbre, service conciergerie. L'art de vivre constantinois dans toute sa splendeur.",
     features: ["Conciergerie", "Marbre & bois sculpté", "Mini-bar", "Hammam"],
   },
   {
@@ -174,7 +174,7 @@ export const experiences: Experience[] = [
     rating: 4.8,
     location: "Médina basse",
     description:
-      "Aux côtés de l'association Patrimoine Cirta, participez à la restauration d'une façade peinte du XIXe siècle.",
+      "Aux côtés de l'association Patrimoine Médina, participez à la restauration d'une façade peinte du XIXe siècle.",
     highlights: ["Action concrète", "Encadrement pro", "Don au projet"],
   },
   {
@@ -252,7 +252,7 @@ export interface Article {
 export const articles: Article[] = [
   {
     id: "cirta-numide",
-    title: "Cirta numide : aux origines de Constantine",
+    title: "Aux origines numides de Constantine",
     tag: "Histoire",
     pages: 42,
     size: "3.2 Mo",
@@ -502,7 +502,7 @@ export const personalGuides: PersonalGuide[] = [
 export const articleI18n: Record<"FR" | "EN" | "AR", Record<string, { title: string; excerpt: string }>> = {
   FR: {
     "cirta-numide": {
-      title: "Cirta numide : aux origines de Constantine",
+      title: "Aux origines numides de Constantine",
       excerpt: "De Massinissa à Jugurtha, la capitale numide qui défia Rome. Cartes, frises chronologiques, sources antiques.",
     },
     "ponts-constantine": {
@@ -544,7 +544,7 @@ export const articleI18n: Record<"FR" | "EN" | "AR", Record<string, { title: str
   },
   EN: {
     "cirta-numide": {
-      title: "Numidian Cirta: the origins of Constantine",
+      title: "Numidian origins of Constantine",
       excerpt: "From Massinissa to Jugurtha, the Numidian capital that defied Rome. Maps, timelines, ancient sources.",
     },
     "ponts-constantine": {
@@ -586,7 +586,7 @@ export const articleI18n: Record<"FR" | "EN" | "AR", Record<string, { title: str
   },
   AR: {
     "cirta-numide": {
-      title: "سيرتا النوميدية: أصول قسنطينة",
+      title: "الأصول النوميدية لقسنطينة",
       excerpt: "من ماسينيسا إلى يوغرطة، العاصمة النوميدية التي تحدت روما. خرائط وجداول زمنية ومصادر قديمة.",
     },
     "ponts-constantine": {
