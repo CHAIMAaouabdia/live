@@ -102,6 +102,7 @@ const Experiences = () => {
             ))}
           </div>
 
+          {filter !== "Parcours" && (
           <div className="frame-cirta-soft bg-card p-5 mb-8 space-y-4">
             <div className="grid md:grid-cols-[1fr_auto_auto] gap-3">
               <div className="relative">
@@ -148,6 +149,37 @@ const Experiences = () => {
               </div>
             )}
           </div>
+          )}
+
+          {filter === "Parcours" ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {parcours.map((p) => (
+                <article key={p.id} className="group relative frame-cirta-soft bg-card overflow-hidden flex flex-col stamp-corners">
+                  <div className="relative aspect-[5/4] overflow-hidden">
+                    <img src={p.img} alt={p.title} loading="lazy" className="w-full h-full object-cover image-warm transition-transform duration-700 group-hover:scale-105" />
+                    <span className={`absolute top-3 end-3 text-[10px] font-display uppercase tracking-[0.18em] px-2.5 py-1 ${p.tier === "Gratuit" ? "bg-sand-100 text-brown-dark border border-brown-dark/30" : "bg-primary text-primary-foreground"}`}>
+                      {p.tier}
+                    </span>
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="eyebrow text-[10px]">{p.subtitle} · {p.duration}</p>
+                      <span className="flex items-center gap-1 text-xs text-brown"><Star className="w-3 h-3 fill-brown" /> {p.rating}</span>
+                    </div>
+                    <h3 className="font-serif text-xl text-ink leading-snug mb-2">{p.title}</h3>
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground mb-3"><MapPin className="w-3 h-3" /> Constantine</div>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3 flex-1">{p.description}</p>
+                    <div className="flex items-end justify-between pt-4 border-t border-border-soft">
+                      <p className="font-serif text-lg text-brown">{p.basePrice === 0 ? "Gratuit" : `${p.basePrice.toLocaleString(locale)} DA`}</p>
+                      <Button variant="cirta" size="sm" onClick={() => navigate(`/parcours?id=${p.id}`)}>
+                        Voir le parcours <ArrowRight className="w-3 h-3 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : null}
 
           <div className="flex items-center justify-between mb-6">
             <p className="text-sm text-muted-foreground font-serif">
