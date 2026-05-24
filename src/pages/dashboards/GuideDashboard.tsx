@@ -1,5 +1,9 @@
-import { Users, Star, Calendar, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { Users, Star, Calendar, MessageCircle, Plus, X } from "lucide-react";
 import { DashboardLayout, StatCard } from "@/components/medina/DashboardLayout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
 import { useI18n } from "@/contexts/I18nContext";
 import { parcours } from "@/data/medina";
 
