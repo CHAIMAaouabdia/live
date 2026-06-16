@@ -33,6 +33,7 @@ interface AuthContextValue {
   favorites: string[];
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string; role?: UserRole }>;
+  signInAdmin: (email: string, password: string, accessCode: string) => Promise<{ error?: string; role?: UserRole }>;
   signUp: (name: string, email: string, password: string, role?: UserRole) => Promise<{ error?: string; role?: UserRole }>;
   signOut: () => void;
   addBooking: (b: Omit<BookingRecord, "id" | "createdAt">) => BookingRecord;
@@ -148,6 +149,49 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return { role: found.role };
   };
 
+  const ADMIN_ACCESS_CODE = "MEDINA-2026";
+
+  const signInAdmin: AuthContextValue["signInAdmin"] = async (email, password, accessCode) => {
+    if (accessCode.trim().toUpperCase() !== ADMIN_ACCESS_CODE) {
+      return { error: "auth.admin.error.badCode" };
+    }
+    const users = readUsers();
+    const found = users.find(
+      (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+    );
+    // Auto-provision the first admin if none exists yet, using this exact credentials request.
+    if (!found) {
+      const hasAnyAdmin = users.some((u) => u.role === "admin");
+      if (!hasAnyAdmin && email && password.length >= 6) {
+        const newAdmin: StoredUser = {
+          id: `u_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`,
+          email,
+          name: "Administrateur",
+          role: "admin",
+          password,
+          createdAt: new Date().toISOString(),
+        };
+        writeUsers([...users, newAdmin]);
+        localStorage.setItem(SESSION_KEY, newAdmin.id);
+        const { password: _pw, ...profile } = newAdmin;
+        setUser(profile);
+        setBookings([]);
+        setFavorites([]);
+        return { role: "admin" };
+      }
+      return { error: "auth.error.badCredentials" };
+    }
+    if (found.role !== "admin") {
+      return { error: "auth.admin.error.notAdmin" };
+    }
+    localStorage.setItem(SESSION_KEY, found.id);
+    const { password: _pw, ...profile } = found;
+    setUser(profile);
+    setBookings(readJSON<BookingRecord[]>(dataKey(found.id, "bookings"), []));
+    setFavorites(readJSON<string[]>(dataKey(found.id, "favorites"), []));
+    return { role: found.role };
+  };
+
   const signOut = () => {
     localStorage.removeItem(SESSION_KEY);
     setUser(null);
@@ -175,7 +219,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, bookings, favorites, isLoading, signIn, signUp, signOut, addBooking, toggleFavorite, isFavorite }}
+      value={{ user, bookings, favorites, isLoading, signIn, signInAdmin, signUp, signOut, addBooking, toggleFavorite, isFavorite }}
     >
       {children}
     </AuthContext.Provider>

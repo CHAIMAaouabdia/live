@@ -11,6 +11,7 @@ import Experiences from "./pages/Experiences.tsx";
 import Parcours from "./pages/Parcours.tsx";
 import Bibliotheque from "./pages/Bibliotheque.tsx";
 import Auth from "./pages/Auth.tsx";
+import AdminAccess from "./pages/AdminAccess.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import ClientDashboard from "./pages/dashboards/ClientDashboard.tsx";
 import GuideDashboard from "./pages/dashboards/GuideDashboard.tsx";
@@ -43,6 +44,7 @@ const App = () => (
               <Route path="/bibliotheque" element={<Bibliotheque />} />
               <Route path="/auth" element={<Auth mode="signin" />} />
               <Route path="/auth/signup" element={<Auth mode="signup" />} />
+              <Route path="/admin/access" element={<AdminAccess />} />
               <Route path="/dashboard" element={<DashboardRedirect />} />
               <Route path="/dashboard/legacy" element={<Dashboard />} />
               <Route path="/client" element={<ClientDashboard />} />
