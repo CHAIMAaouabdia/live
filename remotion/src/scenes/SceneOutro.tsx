@@ -35,7 +35,7 @@ export const SceneOutro: React.FC = () => {
           fontFamily: sans, color: palette.sand, fontSize: 22, marginTop: 50, letterSpacing: 4,
           opacity: interpolate(frame, [40, 70], [0, 1], { extrapolateRight: "clamp" }),
         }}>
-          livemedina.lovable.app
+          livemedina.vercel.app
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
