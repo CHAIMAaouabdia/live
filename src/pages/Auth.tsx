@@ -93,7 +93,7 @@ const Auth = ({ mode: initialMode }: { mode: Mode }) => {
                   <ShieldCheck className="w-3.5 h-3.5 text-brown" />
                   <span className="eyebrow text-[10px]">{t("auth.role.label")}</span>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {roleOptions.map((r) => {
                     const selected = role === r.id;
                     return (
@@ -164,12 +164,19 @@ const Auth = ({ mode: initialMode }: { mode: Mode }) => {
                 {mode === "signin" ? t("auth.signup.cta") : t("auth.signin.cta")}
               </span>
             </button>
-            <div>
+            <div className="space-y-2">
               <Link
                 to="/"
-                className="text-xs text-muted-foreground hover:text-ink font-display uppercase tracking-widest"
+                className="block text-xs text-muted-foreground hover:text-ink font-display uppercase tracking-widest"
               >
                 {t("auth.guest")}
+              </Link>
+              <Link
+                to="/admin/access"
+                className="inline-flex items-center gap-1.5 text-[10px] text-muted-foreground/70 hover:text-brown-dark font-display uppercase tracking-[0.22em] transition-colors"
+              >
+                <ShieldCheck className="w-3 h-3" />
+                {t("auth.admin.link")}
               </Link>
             </div>
           </div>
