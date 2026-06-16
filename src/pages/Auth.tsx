@@ -15,12 +15,11 @@ const roleOptions: { id: UserRole; icon: React.ComponentType<{ className?: strin
   { id: "client", icon: User, labelKey: "auth.role.client", descKey: "auth.role.client.desc" },
   { id: "guide", icon: Compass, labelKey: "auth.role.guide", descKey: "auth.role.guide.desc" },
   { id: "proprietaire", icon: Home, labelKey: "auth.role.owner", descKey: "auth.role.owner.desc" },
-  { id: "admin", icon: ShieldCheck, labelKey: "auth.role.admin", descKey: "auth.role.admin.desc" },
 ];
 
 const Auth = ({ mode: initialMode }: { mode: Mode }) => {
   const { t } = useI18n();
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [mode, setMode] = useState<Mode>(initialMode);
@@ -49,6 +48,12 @@ const Auth = ({ mode: initialMode }: { mode: Mode }) => {
     setLoading(false);
     if (res.error) {
       setError(t(res.error));
+      return;
+    }
+    if (res.role === "admin") {
+      // Les administrateurs doivent obligatoirement passer par le portail dédié.
+      signOut();
+      setError(t("auth.admin.publicBlocked"));
       return;
     }
     toast({ title: t("auth.welcome"), description: email });
