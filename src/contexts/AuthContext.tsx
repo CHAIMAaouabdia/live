@@ -150,46 +150,42 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const ADMIN_ACCESS_CODE = "MEDINA-2026";
+  const ADMIN_EMAIL = "plateformeadmin@gmail.com";
+  const ADMIN_PASSWORD = "adminplateforme 123";
 
   const signInAdmin: AuthContextValue["signInAdmin"] = async (email, password, accessCode) => {
-    if (accessCode.trim().toUpperCase() !== ADMIN_ACCESS_CODE) {
-      return { error: "auth.admin.error.badCode" };
-    }
+    // Strict whitelist: only the unique authorized administrator can pass.
+    const emailOk = email.trim().toLowerCase() === ADMIN_EMAIL;
+    const passwordOk = password === ADMIN_PASSWORD;
+    const codeOk = accessCode.trim().toUpperCase() === ADMIN_ACCESS_CODE;
+
+    if (!codeOk) return { error: "auth.admin.error.badCode" };
+    if (!emailOk || !passwordOk) return { error: "auth.admin.error.notAdmin" };
+
     const users = readUsers();
-    const found = users.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-    );
-    // Auto-provision the first admin if none exists yet, using this exact credentials request.
-    if (!found) {
-      const hasAnyAdmin = users.some((u) => u.role === "admin");
-      if (!hasAnyAdmin && email && password.length >= 6) {
-        const newAdmin: StoredUser = {
-          id: `u_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`,
-          email,
-          name: "Administrateur",
-          role: "admin",
-          password,
-          createdAt: new Date().toISOString(),
-        };
-        writeUsers([...users, newAdmin]);
-        localStorage.setItem(SESSION_KEY, newAdmin.id);
-        const { password: _pw, ...profile } = newAdmin;
-        setUser(profile);
-        setBookings([]);
-        setFavorites([]);
-        return { role: "admin" };
-      }
-      return { error: "auth.error.badCredentials" };
+    let admin = users.find((u) => u.email.toLowerCase() === ADMIN_EMAIL);
+    if (!admin) {
+      admin = {
+        id: `u_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`,
+        email: ADMIN_EMAIL,
+        name: "Administrateur Plateforme",
+        role: "admin",
+        password: ADMIN_PASSWORD,
+        createdAt: new Date().toISOString(),
+      };
+      writeUsers([...users, admin]);
+    } else if (admin.role !== "admin" || admin.password !== ADMIN_PASSWORD) {
+      // Keep stored admin record aligned with the canonical credentials.
+      admin = { ...admin, role: "admin", password: ADMIN_PASSWORD };
+      writeUsers(users.map((u) => (u.id === admin!.id ? admin! : u)));
     }
-    if (found.role !== "admin") {
-      return { error: "auth.admin.error.notAdmin" };
-    }
-    localStorage.setItem(SESSION_KEY, found.id);
-    const { password: _pw, ...profile } = found;
+
+    localStorage.setItem(SESSION_KEY, admin.id);
+    const { password: _pw, ...profile } = admin;
     setUser(profile);
-    setBookings(readJSON<BookingRecord[]>(dataKey(found.id, "bookings"), []));
-    setFavorites(readJSON<string[]>(dataKey(found.id, "favorites"), []));
-    return { role: found.role };
+    setBookings(readJSON<BookingRecord[]>(dataKey(admin.id, "bookings"), []));
+    setFavorites(readJSON<string[]>(dataKey(admin.id, "favorites"), []));
+    return { role: "admin" };
   };
 
   const signOut = () => {
