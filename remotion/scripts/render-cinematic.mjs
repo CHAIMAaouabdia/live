@@ -25,7 +25,7 @@ await renderMedia({
   audioCodec: "aac",
   outputLocation: "/mnt/documents/live_medina_cinematic.mp4",
   puppeteerInstance: browser,
-  concurrency: 1,
+  concurrency: 4,
 });
 
 await browser.close({ silent: false });
